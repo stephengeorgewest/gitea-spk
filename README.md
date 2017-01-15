@@ -1,3 +1,15 @@
+# gitea-spk
+
+Fork from gogs-spk to create a SPK package for [Gitea](https://github.com/go-gitea/gitea), a Gogs fork.
+
+Gitea has pre-compiled binaries for ARM available on their repo https://github.com/go-gitea/gitea/releases
+
+Remember to rename the binary to just "gitea" when putting it into the 1_create_package/gitea/ folder.
+
+Tested to work on DS116 with Gitea 1.0.1 
+
+## Original:
+
 # gogs-spk
 
 [Gogs](https://gogs.io) (Go Git Service) SPK package ([Synology PacKages](https://www.synology.com/en-us/dsm/app_packages))
