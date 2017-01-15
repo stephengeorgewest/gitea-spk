@@ -1,9 +1,9 @@
-1_create_package/gogs/*
-!1_create_package/gogs/put_gogs_binary_here
+1_create_package/gitea/*
+!1_create_package/gitea/put_gitea_binary_here
 
-gogs.spk
-gogs*.zip
-gogs*.tar.gz
+gitea.spk
+gitea*.zip
+gitea*.tar.gz
 
 
 #### joe made this: http://goel.io/joe
@@ -13,7 +13,8 @@ gogs*.tar.gz
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

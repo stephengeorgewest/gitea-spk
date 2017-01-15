@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Package
-PACKAGE="gogs"
-DNAME="Gogs"
+PACKAGE="gitea"
+DNAME="Gitea"
 
 INSTALL_DIR="/usr/local/${PACKAGE}"
 SSS="/var/packages/${DNAME}/scripts/start-stop-status"
@@ -11,15 +11,15 @@ PATH="${INSTALL_DIR}:${PATH}"
 SERVICETOOL="/usr/syno/bin/servicetool"
 FWPORTS="/var/packages/${DNAME}/scripts/${PACKAGE}.sc"
 
-FILE_CREATE_LOG="${INSTALL_DIR}/gogs/wizard_create_log"
-LOG_FILE="/var/log/gogs.log"
+FILE_CREATE_LOG="${INSTALL_DIR}/gitea/wizard_create_log"
+LOG_FILE="/var/log/gitea.log"
 
-SETTING_FILE="${INSTALL_DIR}/gogs/custom/conf/app.ini"
+SETTING_FILE="${INSTALL_DIR}/gitea/custom/conf/app.ini"
 
 preinst ()
 {
     if [[ -f "${SETTING_FILE}" ]]; then
-        cp "${SETTING_FILE}" /tmp/gogs_app.ini
+        cp "${SETTING_FILE}" /tmp/gitea_app.ini
     fi
     exit 0
 }
@@ -37,9 +37,9 @@ postinst ()
     # Add firewall config
     ${SERVICETOOL} --install-configure-file --package ${FWPORTS} >> /dev/null
 
-    if [[ -f "/tmp/gogs_app.ini" ]]; then
-        mkdir -p "${INSTALL_DIR}/gogs/custom/conf"
-        mv "/tmp/gogs_app.ini" ${SETTING_FILE}
+    if [[ -f "/tmp/gitea_app.ini" ]]; then
+        mkdir -p "${INSTALL_DIR}/gitea/custom/conf"
+        mv "/tmp/gitea_app.ini" ${SETTING_FILE}
     fi
 
     exit 0
@@ -75,7 +75,7 @@ preupgrade ()
     ${SSS} stop > /dev/null
 
     if [[ -f "${SETTING_FILE}" ]]; then
-        cp "${SETTING_FILE}" /tmp/gogs_app.ini
+        cp "${SETTING_FILE}" /tmp/gitea_app.ini
     fi
 
     exit 0
@@ -83,9 +83,9 @@ preupgrade ()
 
 postupgrade ()
 {
-    if [[ -f "/tmp/gogs_app.ini" ]]; then
-        mkdir -p "${INSTALL_DIR}/gogs/custom/conf"
-        mv "/tmp/gogs_app.ini" ${SETTING_FILE}
+    if [[ -f "/tmp/gitea_app.ini" ]]; then
+        mkdir -p "${INSTALL_DIR}/gitea/custom/conf"
+        mv "/tmp/gitea_app.ini" ${SETTING_FILE}
     fi
     exit 0
 }

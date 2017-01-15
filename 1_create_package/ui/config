@@ -1,11 +1,11 @@
 {
     ".url": {
-        "com.gogits.gogs": {
+        "io.gitea": {
             "type": "url",
             "allUsers": true,
-            "title": "Gogs",
-            "desc": "Gogs (Go Git Service) is a painless self-hosted Git service",
-            "icon": "gogs-{0}.png",
+            "title": "Gitea",
+            "desc": "Gitea - Git with a cup of tea",
+            "icon": "gitea-{0}.png",
             "protocol": "http",
             "url": "/",
             "port": "3000", 

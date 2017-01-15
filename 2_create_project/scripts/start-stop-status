@@ -4,19 +4,19 @@
 #
 
 # Package
-PACKAGE="gogs"
-DNAME="Gogs"
+PACKAGE="gitea"
+DNAME="Gitea"
 
 # Others
 INSTALL_DIR="/usr/local/${PACKAGE}"
-DIR_GOGS="${INSTALL_DIR}/gogs"
-GOGS="${DIR_GOGS}/gogs"
-PID_FILE="/var/run/gogs.pid"
-LOG_FILE="/var/log/gogs.log"
+DIR_gitea="${INSTALL_DIR}/gitea"
+gitea="${DIR_gitea}/gitea"
+PID_FILE="/var/run/gitea.pid"
+LOG_FILE="/var/log/gitea.log"
 
-FILE_CREATE_LOG="${DIR_GOGS}/wizard_create_log"
+FILE_CREATE_LOG="${DIR_gitea}/wizard_create_log"
 
-export HOME=${DIR_GOGS}
+export HOME=${DIR_gitea}
 #export PATH=$PATH:~/opt/bin  # to Git. Not necessary with Git Server (Synology)
 export USER=root
 export USERNAME=root
@@ -24,9 +24,9 @@ export USERNAME=root
 start_daemon ()
 {
     if [ -e ${FILE_CREATE_LOG} ]; then
-        ${GOGS} web > ${LOG_FILE} 2>&1 &
+        ${gitea} web > ${LOG_FILE} 2>&1 &
     else
-        ${GOGS} web > /dev/null 2>&1 &
+        ${gitea} web > /dev/null 2>&1 &
     fi
     echo $! > ${PID_FILE}
 }
