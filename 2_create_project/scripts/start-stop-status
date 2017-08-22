@@ -23,6 +23,7 @@ export USERNAME=root
 
 start_daemon ()
 {
+    cd ${DIR_gitea}
     if [ -e ${FILE_CREATE_LOG} ]; then
         ${gitea} web > ${LOG_FILE} 2>&1 &
     else
