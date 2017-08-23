@@ -13,6 +13,7 @@ FWPORTS="/var/packages/${DNAME}/scripts/${PACKAGE}.sc"
 
 FILE_CREATE_LOG="${INSTALL_DIR}/gitea/wizard_create_log"
 LOG_FILE="/var/log/gitea.log"
+PACKAGE_LOG="/var/log/synopkg.log"
 
 SETTING_FILE="${INSTALL_DIR}/gitea/custom/conf/app.ini"
 
@@ -88,4 +89,26 @@ postupgrade ()
         mv "/tmp/gitea_app.ini" ${SETTING_FILE}
     fi
     exit 0
+}
+
+log ()
+{
+    msg=$1
+    version=$2
+    echo "$(date +"%Y/%m/%d %T") upgrade Gitea $version $msg" >> ${PACKAGE_LOG}
+}
+
+logBegin ()
+{
+    msg=$1
+    version=$2
+    echo "$(date +"%Y/%m/%d %T") upgrade Gitea $version Begin $msg" >> ${PACKAGE_LOG}
+}
+
+logEnd ()
+{
+   msg=$1
+   code=$2
+   version=$3
+   echo "$(date +"%Y/%m/%d %T") upgrade Gitea $version End $msg ret=[$code]" >> ${PACKAGE_LOG}
 }
