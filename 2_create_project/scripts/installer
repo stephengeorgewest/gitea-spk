@@ -4,24 +4,21 @@
 PACKAGE="gitea"
 DNAME="Gitea"
 
+TEMP_STORAGE_DIR="${SYNOPKG_TEMP_UPGRADE_FOLDER}"
 INSTALL_DIR="/usr/local/${PACKAGE}"
+APP_DIR="${INSTALL_DIR}/gitea"
 SSS="/var/packages/${DNAME}/scripts/start-stop-status"
 PATH="${INSTALL_DIR}:${PATH}"
 
 SERVICETOOL="/usr/syno/bin/servicetool"
 FWPORTS="/var/packages/${DNAME}/scripts/${PACKAGE}.sc"
 
-FILE_CREATE_LOG="${INSTALL_DIR}/gitea/wizard_create_log"
+FILE_CREATE_LOG="${APP_DIR}/wizard_create_log"
 LOG_FILE="/var/log/gitea.log"
 PACKAGE_LOG="/var/log/synopkg.log"
 
-SETTING_FILE="${INSTALL_DIR}/gitea/custom/conf/app.ini"
-
 preinst ()
 {
-    if [[ -f "${SETTING_FILE}" ]]; then
-        cp "${SETTING_FILE}" /tmp/gitea_app.ini
-    fi
     exit 0
 }
 
@@ -37,11 +34,6 @@ postinst ()
 
     # Add firewall config
     ${SERVICETOOL} --install-configure-file --package ${FWPORTS} >> /dev/null
-
-    if [[ -f "/tmp/gitea_app.ini" ]]; then
-        mkdir -p "${INSTALL_DIR}/gitea/custom/conf"
-        mv "/tmp/gitea_app.ini" ${SETTING_FILE}
-    fi
 
     exit 0
 }
@@ -75,20 +67,50 @@ preupgrade ()
     # Stop the package
     ${SSS} stop > /dev/null
 
-    if [[ -f "${SETTING_FILE}" ]]; then
-        cp "${SETTING_FILE}" /tmp/gitea_app.ini
+    ret=0
+    # backup the data
+    log "Backup data" ${SYNOPKG_OLD_PKGVER}
+    for dir in ${APP_DIR}/*/ ; do
+        logBegin "rsync ${dir%*/} to ${TEMP_STORAGE_DIR}/" ${SYNOPKG_OLD_PKGVER}
+        rsync -a ${dir%*/} ${TEMP_STORAGE_DIR}/
+        ret=$?
+        logEnd "rsync ${dir%*/} to ${TEMP_STORAGE_DIR}/" $? ${SYNOPKG_OLD_PKGVER}
+        if [ ! "$ret" -eq "0" ]; then
+            echo "Could not backup data $dir. Please ensure there is sufficient space." >> $SYNOPKG_TEMP_LOGFILE
+        fi
+    done
+    if [ -f ${FILE_CREATE_LOG} ]; then
+        cp -a ${FILE_CREATE_LOG} ${TEMP_STORAGE_DIR}
     fi
 
-    exit 0
+    exit $ret
 }
 
 postupgrade ()
 {
-    if [[ -f "/tmp/gitea_app.ini" ]]; then
-        mkdir -p "${INSTALL_DIR}/gitea/custom/conf"
-        mv "/tmp/gitea_app.ini" ${SETTING_FILE}
+    ret=0
+    # restore the data
+    log "Restore data" ${SYNOPKG_PKGVER}
+    for dir in ${TEMP_STORAGE_DIR}/*/ ; do
+        logBegin "rsync ${dir%*/} to ${APP_DIR}/" ${SYNOPKG_PKGVER}
+        rsync -a ${dir%*/} ${APP_DIR}/
+        ret=$?
+        logEnd "rsync ${dir%*/} to ${APP_DIR}/" $ret ${SYNOPKG_PKGVER}
+        if [ ! "$ret" -eq "0" ]; then
+            echo "Could not restore data from $dir. " >> $SYNOPKG_TEMP_LOGFILE
+        fi
+    done
+    if [ -f ${TEMP_STORAGE_DIR}/wizard_create_log ]; then
+        logBegin "copy ${TEMP_STORAGE_DIR}/wizard_create_log to ${APP_DIR}/" ${SYNOPKG_PKGVER}
+        cp -a ${TEMP_STORAGE_DIR}/wizard_create_log ${APP_DIR}/
+        logEnd "copy ${TEMP_STORAGE_DIR}/wizard_create_log to ${APP_DIR}/" $? ${SYNOPKG_PKGVER}
     fi
-    exit 0
+
+    if [ ! "$ret" -eq "0" ]; then
+        echo "Data restore failed. Please uninstall, perform new installation and restore data manually from your backup." >> $SYNOPKG_TEMP_LOGFILE
+    fi
+
+    exit $ret
 }
 
 log ()
