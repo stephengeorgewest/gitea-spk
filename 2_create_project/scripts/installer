@@ -73,9 +73,10 @@ preupgrade ()
     for dir in ${APP_DIR}/*/ ; do
         logBegin "rsync ${dir%*/} to ${TEMP_STORAGE_DIR}/" ${SYNOPKG_OLD_PKGVER}
         rsync -a ${dir%*/} ${TEMP_STORAGE_DIR}/
-        ret=$?
-        logEnd "rsync ${dir%*/} to ${TEMP_STORAGE_DIR}/" $? ${SYNOPKG_OLD_PKGVER}
-        if [ ! "$ret" -eq "0" ]; then
+        error_code=$?
+        logEnd "rsync ${dir%*/} to ${TEMP_STORAGE_DIR}/" $error_code ${SYNOPKG_OLD_PKGVER}
+        if [ ! "$error_code" -eq "0" ]; then
+            $ret=1
             echo "Could not backup data $dir. Please ensure there is sufficient space." >> $SYNOPKG_TEMP_LOGFILE
         fi
     done
@@ -94,9 +95,10 @@ postupgrade ()
     for dir in ${TEMP_STORAGE_DIR}/*/ ; do
         logBegin "rsync ${dir%*/} to ${APP_DIR}/" ${SYNOPKG_PKGVER}
         rsync -a ${dir%*/} ${APP_DIR}/
-        ret=$?
-        logEnd "rsync ${dir%*/} to ${APP_DIR}/" $ret ${SYNOPKG_PKGVER}
-        if [ ! "$ret" -eq "0" ]; then
+        error_code=$?
+        logEnd "rsync ${dir%*/} to ${APP_DIR}/" $error_code ${SYNOPKG_PKGVER}
+        if [ ! "$error_code" -eq "0" ]; then
+            $ret=1
             echo "Could not restore data from $dir. " >> $SYNOPKG_TEMP_LOGFILE
         fi
     done
