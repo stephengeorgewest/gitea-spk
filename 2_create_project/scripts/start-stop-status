@@ -11,15 +11,15 @@ DNAME="Gitea"
 INSTALL_DIR="/usr/local/${PACKAGE}"
 DIR_gitea="${INSTALL_DIR}/gitea"
 gitea="${DIR_gitea}/gitea"
-PID_FILE="/var/run/gitea.pid"
-LOG_FILE="/var/log/gitea.log"
+PID_FILE="${DIR_gitea}/gitea.pid"
+LOG_FILE="${DIR_gitea}/gitea.log"
 
 FILE_CREATE_LOG="${DIR_gitea}/wizard_create_log"
 
 export HOME=${DIR_gitea}
 #export PATH=$PATH:~/opt/bin  # to Git. Not necessary with Git Server (Synology)
-export USER=root
-export USERNAME=root
+export USER=gitea
+export USERNAME=gitea
 
 start_daemon ()
 {
