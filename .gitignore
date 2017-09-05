@@ -1,9 +1,12 @@
 1_create_package/gitea/*
 !1_create_package/gitea/put_gitea_binary_here
 
+2_create_project/INFO
+
 gitea.spk
 gitea*.zip
 gitea*.tar.gz
+gitea-*linux-*
 
 
 #### joe made this: http://goel.io/joe
