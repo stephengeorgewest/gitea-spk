@@ -25,6 +25,7 @@ select_binary()
     echo "$binary"
 }
 
+
 # Determines the version number of the given Gitea binary.
 get_version()
 {
@@ -34,10 +35,31 @@ get_version()
 }
 
 
+# Determines the platform identifier of the given Gitea binary.
+get_platform()
+{
+    local binary="$1"
+
+    echo ${binary} | sed 's/.*linux-\(.*\)/\1/'
+}
+
+
+# Determines the Synology arch values for the given Gitea binary.
+get_arch()
+{
+    local binary="$1"
+    local platform=`get_platform $binary`
+
+    # lookup the arch values for the given platform in the mappings file
+    grep "^$platform " 'arch.desc' | awk '{for (i=2; i<=NF; i++) printf "%s ", $i}' | xargs
+}
+
+
 # Updates the package metadata to reflect the given Gitea binary.
 update_metadata()
 {
     local version="$1"
+    local arch="$2"
 
     if [ "$arch" = "" ]; then
         echo "$binary is not a supported platform"
@@ -47,6 +69,7 @@ update_metadata()
     cp 2_create_project/INFO.in 2_create_project/INFO
 
     sed -i -e "s/[0-9]\+\.[0-9]\+\.[0-9]\+/$version/" 2_create_project/INFO
+    sed -i -e "s#arch=\".*\"#arch=\"$arch\"#" 2_create_project/INFO
 }
 
 
@@ -57,8 +80,9 @@ build()
     local binary=$1
 
     version=`get_version $binary`
+    arch=`get_arch $binary`
 
-    update_metadata "$version"
+    update_metadata "$version" "$arch"
 
     chmod +x $binary
     mkdir -p 1_create_package/gitea
@@ -71,6 +95,7 @@ build()
     cd $current
 }
 
+
 binary=`select_binary $@`
 
-build $binary
+build "$binary"
