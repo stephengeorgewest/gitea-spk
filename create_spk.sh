@@ -21,7 +21,7 @@ version=$(echo ${binary} | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 # update the package meta data to match the binary version
 cp 2_create_project/INFO.in 2_create_project/INFO
-sed -i -e "s/[0-9]+\.[0-9]+\.[0-9]+/$version/" 2_create_project/INFO
+sed -i -e "s/[0-9]\+\.[0-9]\+\.[0-9]\+/$version/" 2_create_project/INFO
 
 chmod +x $binary
 mkdir -p 1_create_package/gitea
