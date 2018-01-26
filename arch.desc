@@ -2,7 +2,7 @@
 # https://developer.synology.com/developer-guide/appendix/index.html
 # https://github.com/SynologyOpenSource/pkgscripts-ng/blob/master/include/platforms
 386 x86
-amd64 cedarview bromolow denverton apollolake avoton
+amd64 cedarview bromolow denverton apollolake avoton braswell grantley broadwell dockerx64 kvmx64 x64 
 arm-5 88f6281 88f6282
 arm-7 armada370 armada375 armada38x armadaxp alpine/alpine4k comcerto2k monaco
 arm64 rtd1296
