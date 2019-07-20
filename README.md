@@ -10,7 +10,7 @@ The Gitea package requires the **[Git Server](https://www.synology.com/en-global
 
 To create the package, clone the repository:
 
-`$ git clone https://github.com/Kasurus/gitea-spk.git`
+`$ git clone https://github.com/flipswitchingmonkey/gitea-spk.git`
 
 Change into the newly created directory - the root directory:
 
