@@ -1,4 +1,7 @@
 {
+  "defaults": {
+    "run-as": "gitea"
+  },
   "username": "gitea",
   "groupname": "gitea",
   "ctrl-script": [{
