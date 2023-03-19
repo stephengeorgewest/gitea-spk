@@ -1,6 +1,6 @@
 {
   "defaults": {
-    "run-as": "gitea"
+    "run-as": "package"
   },
   "username": "gitea",
   "groupname": "gitea",
