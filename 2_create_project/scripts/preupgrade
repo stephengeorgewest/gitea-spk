@@ -1,3 +1,8 @@
 #!/bin/sh
-. `dirname $0`/installer
-`basename $0` > $SYNOPKG_TEMP_LOGFILE
+# Copyright (C) 2000-2020 Synology Inc. All rights reserved.
+
+### This script will execute ONLY when package upgraded.
+### Actions before package upgraded.
+### ex. backup user settings for package upgrade.
+
+exit 0
