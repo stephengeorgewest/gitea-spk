@@ -1,17 +1,18 @@
 {
-  "port-config": {
-    "protocol-file": "app/gitea.sc"
-  },
-  "data-share": {
-    "shares": [
-      {
-        "name": "{{wizard_gitea_dir}}",
-        "permission": {
-          "rw": [
-            "gitea"
-          ]
-        }
-      }
-    ]
+	"port-config": {
+	  "protocol-file": "app/gitea.sc"
+	},
+	"data-share": {
+	  "shares": [
+		{
+		  "name": "{{wizard_gitea_dir}}",
+		  "permission": {
+			"rw": [
+			  "sc-gitea"
+			]
+		  }
+		}
+	  ]
+	}
   }
-}
+  

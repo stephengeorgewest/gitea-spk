@@ -14,7 +14,7 @@ EFF_USER="gitea"
 if [ -n "${wizard_gitea_dir}" ]; then SHARE_PATH="${wizard_gitea_dir}"; fi
 
 # Service port
-SERVICE_PORT="8418"
+SERVICE_PORT="3000"
 
 # start-stop-status script redirect stdout/stderr to LOG_FILE
 LOG_FILE="${SYNOPKG_PKGVAR}/${SYNOPKG_PKGNAME}.log"

@@ -1,0 +1,17 @@
+{
+    ".url": {
+      "com.synocommunity.packages.gitea": {
+        "title": "Gitea",
+        "desc": "Gitea is a community managed lightweight code hosting solution written in Go.",
+        "icon": "images/gitea-{0}.png",
+        "type": "url",
+        "protocol": "http",
+        "port": "3000",
+        "url": "/",
+        "allUsers": true,
+        "grantPrivilege": "all",
+        "advanceGrantPrivilege": true
+      }
+    }
+  }
+  
