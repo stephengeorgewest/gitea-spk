@@ -1,1 +1,17 @@
-{"service-cfg":{}}
+{
+  "port-config": {
+    "protocol-file": "app/gitea.sc"
+  },
+  "data-share": {
+    "shares": [
+      {
+        "name": "{{wizard_gitea_dir}}",
+        "permission": {
+          "rw": [
+            "gitea"
+          ]
+        }
+      }
+    ]
+  }
+}
