@@ -8,7 +8,7 @@
 		  "name": "{{wizard_gitea_dir}}",
 		  "permission": {
 			"rw": [
-			  "sc-gitea"
+			  "gitea"
 			]
 		  }
 		}
