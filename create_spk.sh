@@ -85,8 +85,8 @@ build()
     update_metadata "$version" "$arch"
 
     chmod +x $binary
-    mkdir -p 1_create_package/gitea
-    ln -sf "$PWD/$binary" 1_create_package/gitea/gitea
+    mkdir -p 1_create_package/bin
+    ln -sf "$PWD/$binary" 1_create_package/bin/gitea
     cd 1_create_package
     tar cvfJh ../2_create_project/package.tgz *
     cd ../2_create_project/

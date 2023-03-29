@@ -1,5 +1,5 @@
-1_create_package/gitea/*
-!1_create_package/gitea/put_gitea_binary_here
+1_create_package/bin/*
+!1_create_package/bin/put_gitea_binary_here
 
 2_create_project/INFO
 
