@@ -1,0 +1,31 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ "ci" ]
+  pull_request:
+    branches: [ "ci" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set GITEA_VERSION
+      run: GITEA_VERSION=1.17.4
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Download binary
+      run: wget https://github.com/go-gitea/gitea/releases/download/v${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-arm64.xz
+    - name: Decompress binary
+      run: xz --decompress gitea-*.xz
+    - name: create package
+      run: ./create_spk.sh
+    - name: check
+      run: shasum gitea-1.17.4-linux-arm64.spk
+    - name: Save Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gitea-1.17.4-linux-arm64.spk
+        path: gitea-1.17.4-linux-arm64.spk
+        retention-days: 1
