@@ -26,6 +26,6 @@ jobs:
     - name: Save Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: gitea-${GITEA_VERSION}-linux-arm64.spk
-        path: gitea-${GITEA_VERSION}-linux-arm64.spk
+        name: gitea-${{env.GITEA_VERSION}}-linux-arm64.spk
+        path: gitea-${{env.GITEA_VERSION}}-linux-arm64.spk
         retention-days: 1
